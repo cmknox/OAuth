@@ -29,6 +29,7 @@ import com.microsoft.graph.logger.DefaultLogger;
 
 import com.microsoft.graph.logger.ILogger;
 
+import com.microsoft.graph.logger.LoggerLevel;
 import com.microsoft.graph.options.HeaderOption;
 
 import com.microsoft.services.msa.LiveAuthClient;
@@ -160,6 +161,7 @@ public abstract class MSAAuthAndroidAdapter implements IAuthenticationAdapter {
     public MSAAuthAndroidAdapter(final Application application) {
 
         mLogger = new DefaultLogger();
+        mLogger.setLoggingLevel(LoggerLevel.Debug);
 
         application.getBaseContext();
 
