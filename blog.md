@@ -2,18 +2,43 @@
 Platform.initialize(getApplicationContext(), new IAuthCodeProvider() {
     @Override
     public void fetchAuthCodeAsync(String oauthUrl, Platform.IAuthCodeHandler authCodeHandler) {
-    …            
+    	performOAuthFlow(oauthUrl, authCodeHandler);            
     }
 }
 ```
 ``` java
-WebView _web;
-private static String REDIRECT_URI = "https://login.live.com/oauth20_desktop.srf";
+public performOAuthFlow (String oauthUrl, Platform.IAuthCodeHandler authCodeHandler) {
 
-// Get auth_code
-_web.loadUrl(_oauthUrl);
-String code = uri.getQueryParameter("code"); 
-_authCodeHandler.onAuthCodeFetched(code);
+	WebView web;
+	web = (WebView) _authDialog.findViewById(R.id.webv);
+	web.setWebChromeClient(new WebChromeClient());
+	web.getSettings().setJavaScriptEnabled(true);
+	web.getSettings().setDomStorageEnabled(true);
+
+	// Get auth_code
+	web.loadUrl(oauthUrl);
+
+	WebViewClient webViewClient = new WebViewClient() {
+		boolean authComplete = false;
+		@Override
+		public void onPageFinished(WebView view, String url) {
+			super.onPageFinished(view, url);
+
+			if (url.startsWith(REDIRECT_URI)) {
+			    Uri uri = Uri.parse(url);
+			    String code = uri.getQueryParameter("code");
+			    String error = uri.getQueryParameter("error");
+			    if (code != null && !authComplete) {
+				authComplete = true;
+				authCodeHandler.onAuthCodeFetched(code);
+			    } else if (error != null) {
+			      // Handle error case                                    }
+			}
+		 }
+	};
+
+	_web.setWebViewClient(webViewClient);
+}
 ```
 
 ```java
