@@ -4,6 +4,7 @@ Platform.initialize(getApplicationContext(), new IAuthCodeProvider() {
     public void fetchAuthCodeAsync(String oauthUrl, Platform.IAuthCodeHandler authCodeHandler) {
     …            
     }
+}
 ```
 ``` java
 _web.loadUrl(_oauthUrl);
@@ -11,7 +12,7 @@ String code = uri.getQueryParameter("code");
 _authCodeHandler.onAuthCodeFetched(code);
 ```
 
-```
+```java
 RemoteSystemDiscovery.Builder discoveryBuilder;
 discoveryBuilder = new RemoteSystemDiscovery.Builder().setListener(new IRemoteSystemDiscoveryListener() {
     @Override
@@ -29,11 +30,9 @@ discoveryBuilder = new RemoteSystemDiscovery.Builder().setListener(new IRemoteSy
        }
 });
 startDiscovery();
-
 ```
 
-
-```
+```java
 new RemoteSystemConnectionRequest(remoteSystem)
 String url = "http://msn.com"
 
@@ -42,11 +41,10 @@ new RemoteLauncher().LaunchUriAsync(connectionRequest,
         new IRemoteLauncherListener() {
             @Override
             public void onCompleted(RemoteLaunchUriStatus status) {
-                …
+            
+            …
             }
         };
-
-
 ```
 
 	
