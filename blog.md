@@ -7,8 +7,12 @@ Platform.initialize(getApplicationContext(), new IAuthCodeProvider() {
 }
 ```
 ``` java
+WebView _web;
+private static String REDIRECT_URI = "https://login.live.com/oauth20_desktop.srf";
+
+// Get auth_code
 _web.loadUrl(_oauthUrl);
-String code = uri.getQueryParameter("code");
+String code = uri.getQueryParameter("code"); 
 _authCodeHandler.onAuthCodeFetched(code);
 ```
 
